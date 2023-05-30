@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -12,6 +13,10 @@ export class UsersService {
     const saltOrRounds = 10;
     const salt = bcrypt.genSaltSync(saltOrRounds);
     return bcrypt.hashSync(pass, salt);
+  }
+
+  checkPassHash(pass: string, passHash: string) {
+    return bcrypt.compareSync(pass, passHash);
   }
 
   create(createUserDto: CreateUserDto) {
@@ -40,5 +45,9 @@ export class UsersService {
 
   remove(id: string) {
     return this.prismaService.user.delete({ where: { id } });
+  }
+
+  findBy(filter: Prisma.UserWhereUniqueInput) {
+    return this.prismaService.user.findUniqueOrThrow({ where: filter });
   }
 }
