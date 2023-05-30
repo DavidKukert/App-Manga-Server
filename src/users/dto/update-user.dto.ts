@@ -1,9 +1,7 @@
 import { Prisma } from '@prisma/client';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateUserDto } from './create-user.dto';
 
-export class UpdateUserDto implements Prisma.UserUpdateInput {
-  id?: string | Prisma.StringFieldUpdateOperationsInput;
-  name?: string | Prisma.StringFieldUpdateOperationsInput;
-  password?: string | Prisma.StringFieldUpdateOperationsInput;
-  createdAt?: string | Date | Prisma.DateTimeFieldUpdateOperationsInput;
-  updatedAt?: string | Prisma.DateTimeFieldUpdateOperationsInput | Date;
-}
+export class UpdateUserDto
+  extends PartialType(CreateUserDto)
+  implements Prisma.UserUpdateInput {}

@@ -16,7 +16,9 @@ export class UsersService {
 
   create(createUserDto: CreateUserDto) {
     createUserDto.password = this.passToHash(createUserDto.password);
-    return this.prismaService.user.create({ data: createUserDto });
+    return this.prismaService.user.create({
+      data: createUserDto,
+    });
   }
 
   findAll() {

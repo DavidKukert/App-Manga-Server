@@ -6,18 +6,34 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ParamsRouteDto } from '../dto/params-route.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    try {
+      return await this.usersService.create(createUserDto);
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        console.log(error);
+        // Lida com erros específicos do Prisma
+        if (error.code === 'P2002') {
+          throw new BadRequestException('Name already registered!');
+        }
+      }
+      // Lida com outros erros
+      throw new BadRequestException('Error');
+    }
   }
 
   @Get()
@@ -26,17 +42,51 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  async findOne(@Param() { id }: ParamsRouteDto) {
+    try {
+      return await this.usersService.findOne(id);
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('User Not Found');
+        }
+      }
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  async update(
+    @Param() { id }: ParamsRouteDto,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    try {
+      return await this.usersService.update(id, updateUserDto);
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        console.log(error);
+        // Lida com erros específicos do Prisma
+        if (error.code === 'P2002') {
+          throw new BadRequestException('Name already registered!');
+        }
+        if (error.code === 'P2025') {
+          throw new NotFoundException('User Not Found');
+        }
+      }
+      // Lida com outros erros
+      throw new BadRequestException('Error');
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  async remove(@Param() { id }: ParamsRouteDto) {
+    try {
+      return await this.usersService.remove(id);
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('User Not Found');
+        }
+      }
+    }
   }
 }
