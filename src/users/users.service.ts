@@ -19,26 +19,69 @@ export class UsersService {
     return bcrypt.compareSync(pass, passHash);
   }
 
-  create(createUserDto: CreateUserDto) {
-    createUserDto.password = this.passToHash(createUserDto.password);
+  create({ name, password }: CreateUserDto) {
     return this.prismaService.user.create({
-      data: createUserDto,
+      data: {
+        name,
+        password: this.passToHash(password),
+        roles: {
+          connectOrCreate: {
+            create: {
+              name: 'user',
+              description: 'User',
+            },
+            where: {
+              name: 'user',
+            },
+          },
+        },
+      },
     });
   }
 
   findAll() {
-    return this.prismaService.user.findMany();
+    return this.prismaService.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+        roles: {
+          include: {
+            permissions: true,
+          },
+        },
+      },
+    });
   }
 
   findOne(id: string) {
-    return this.prismaService.user.findUniqueOrThrow({ where: { id } });
+    return this.prismaService.user.findUniqueOrThrow({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+        roles: {
+          include: {
+            permissions: true,
+          },
+        },
+      },
+    });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    if (updateUserDto.password && typeof updateUserDto.password === 'string')
-      updateUserDto.password = this.passToHash(updateUserDto.password);
+  update(id: string, { name, password }: UpdateUserDto) {
+    const data: UpdateUserDto = {
+      name,
+    };
+
+    if (password && typeof password === 'string')
+      data.password = this.passToHash(password);
+
     return this.prismaService.user.update({
-      data: updateUserDto,
+      data,
       where: { id },
     });
   }

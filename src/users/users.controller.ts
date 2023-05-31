@@ -8,6 +8,7 @@ import {
   Delete,
   BadRequestException,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { UsersService } from './users.service';
@@ -15,6 +16,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ParamsRouteDto } from '../dto/params-route.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { UserRouteControlAccessGuard } from './user-route-control-access.guard';
+import { ReqPermissions } from 'src/auth/decorators/req-permissions.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -58,6 +61,8 @@ export class UsersController {
     }
   }
 
+  @UseGuards(UserRouteControlAccessGuard)
+  @ReqPermissions(['admin'], ['update_others_users'])
   @Patch(':id')
   async update(
     @Param() { id }: ParamsRouteDto,
@@ -81,6 +86,8 @@ export class UsersController {
     }
   }
 
+  @UseGuards(UserRouteControlAccessGuard)
+  @ReqPermissions(['admin'], ['delete_others_users'])
   @Delete(':id')
   async remove(@Param() { id }: ParamsRouteDto) {
     try {
