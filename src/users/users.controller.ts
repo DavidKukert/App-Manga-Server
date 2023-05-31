@@ -30,7 +30,6 @@ export class UsersController {
       return await this.usersService.create(createUserDto);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        console.log(error);
         // Lida com erros específicos do Prisma
         if (error.code === 'P2002') {
           throw new BadRequestException('Name already registered!');
@@ -72,7 +71,6 @@ export class UsersController {
       return await this.usersService.update(id, updateUserDto);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        console.log(error);
         // Lida com erros específicos do Prisma
         if (error.code === 'P2002') {
           throw new BadRequestException('Name already registered!');
