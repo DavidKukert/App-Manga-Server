@@ -1,4 +1,5 @@
 import { Module, Global } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
@@ -11,10 +12,13 @@ import { ControlAccessGuard } from './control-access.guard';
 @Module({
     imports: [
         UsersModule,
-        JwtModule.register({
+        JwtModule.registerAsync({
             global: true,
-            secret: '123456',
-            signOptions: { expiresIn: '7d' },
+            useFactory: async (configService: ConfigService) => ({
+                secret: configService.get('JWT_SECRET_KEY'),
+                signOptions: { expiresIn: '7d' },
+            }),
+            inject: [ConfigService],
         }),
     ],
     controllers: [AuthController],
