@@ -85,7 +85,7 @@ export class UsersController {
     }
 
     @UseGuards(UserRouteControlAccessGuard)
-    @ReqPermissions(['admin'], ['delete_others_users'])
+    @ReqPermissions(['admin'], ['remove_others_users'])
     @Delete(':id')
     async remove(@Param() { id }: ParamsRouteDto) {
         try {

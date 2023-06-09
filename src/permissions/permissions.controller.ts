@@ -23,7 +23,7 @@ export class PermissionsController {
     constructor(private readonly permissionsService: PermissionsService) {}
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['create_permissions'])
     @Post()
     async create(@Body() createPermissionDto: CreatePermissionDto) {
         try {
@@ -40,14 +40,14 @@ export class PermissionsController {
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['findall_permissions'])
     @Get()
     findAll() {
         return this.permissionsService.findAll();
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['findone_permissions'])
     @Get(':id')
     async findOne(@Param() { id }: ParamsRouteDto) {
         try {
@@ -62,7 +62,7 @@ export class PermissionsController {
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['update_permissions'])
     @Patch(':id')
     async update(
         @Param() { id }: ParamsRouteDto,
@@ -88,7 +88,7 @@ export class PermissionsController {
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['remove_permissions'])
     @Delete(':id')
     async remove(@Param() { id }: ParamsRouteDto) {
         try {

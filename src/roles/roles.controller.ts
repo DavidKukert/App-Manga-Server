@@ -23,7 +23,7 @@ export class RolesController {
     constructor(private readonly rolesService: RolesService) {}
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['create_roles'])
     @Post()
     async create(@Body() createRoleDto: CreateRoleDto) {
         try {
@@ -38,14 +38,14 @@ export class RolesController {
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['findall_roles'])
     @Get()
     findAll() {
         return this.rolesService.findAll();
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['findone_roles'])
     @Get(':id')
     async findOne(@Param() { id }: ParamsRouteDto) {
         try {
@@ -60,7 +60,7 @@ export class RolesController {
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['update_roles'])
     @Patch(':id')
     async update(
         @Param() { id }: ParamsRouteDto,
@@ -83,7 +83,7 @@ export class RolesController {
     }
 
     @UseGuards(ControlAccessGuard)
-    @ReqPermissions(['admin'], [])
+    @ReqPermissions(['admin'], ['remove_roles'])
     @Delete(':id')
     async remove(@Param() { id }: ParamsRouteDto) {
         try {
