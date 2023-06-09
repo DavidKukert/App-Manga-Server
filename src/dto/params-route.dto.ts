@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ParamsRouteDto {
-  @IsNotEmpty()
-  @IsString()
-  @IsUUID()
-  id: string;
+    @IsNotEmpty()
+    @IsString()
+    @IsUUID()
+    id: string;
 }

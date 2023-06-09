@@ -4,8 +4,8 @@ import { PermissionsController } from './permissions.controller';
 import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  controllers: [PermissionsController],
-  providers: [PermissionsService],
-  imports: [UsersModule],
+    controllers: [PermissionsController],
+    providers: [PermissionsService],
+    imports: [UsersModule],
 })
 export class PermissionsModule {}

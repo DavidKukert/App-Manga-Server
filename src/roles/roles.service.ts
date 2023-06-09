@@ -5,46 +5,46 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class RolesService {
-  constructor(private readonly prismaService: PrismaService) {}
+    constructor(private readonly prismaService: PrismaService) {}
 
-  create({ name, description }: CreateRoleDto) {
-    return this.prismaService.role.create({
-      data: {
-        name,
-        description,
-      },
-    });
-  }
+    create({ name, description }: CreateRoleDto) {
+        return this.prismaService.role.create({
+            data: {
+                name,
+                description,
+            },
+        });
+    }
 
-  findAll() {
-    return this.prismaService.role.findMany();
-  }
+    findAll() {
+        return this.prismaService.role.findMany();
+    }
 
-  findOne(id: string) {
-    return this.prismaService.role.findUniqueOrThrow({
-      where: {
-        id,
-      },
-    });
-  }
+    findOne(id: string) {
+        return this.prismaService.role.findUniqueOrThrow({
+            where: {
+                id,
+            },
+        });
+    }
 
-  update(id: string, { name, description }: UpdateRoleDto) {
-    return this.prismaService.role.update({
-      data: {
-        name,
-        description,
-      },
-      where: {
-        id,
-      },
-    });
-  }
+    update(id: string, { name, description }: UpdateRoleDto) {
+        return this.prismaService.role.update({
+            data: {
+                name,
+                description,
+            },
+            where: {
+                id,
+            },
+        });
+    }
 
-  remove(id: string) {
-    return this.prismaService.role.delete({
-      where: {
-        id,
-      },
-    });
-  }
+    remove(id: string) {
+        return this.prismaService.role.delete({
+            where: {
+                id,
+            },
+        });
+    }
 }

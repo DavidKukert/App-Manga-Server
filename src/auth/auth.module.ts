@@ -7,24 +7,25 @@ import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ControlAccessGuard } from './control-access.guard';
 
+@Global()
 @Module({
-  imports: [
-    UsersModule,
-    JwtModule.register({
-      global: true,
-      secret: '123456',
-      signOptions: { expiresIn: '7d' },
-    }),
-  ],
-  controllers: [AuthController],
-  providers: [
-    AuthService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-    ControlAccessGuard,
-  ],
-  exports: [AuthService, ControlAccessGuard],
+    imports: [
+        UsersModule,
+        JwtModule.register({
+            global: true,
+            secret: '123456',
+            signOptions: { expiresIn: '7d' },
+        }),
+    ],
+    controllers: [AuthController],
+    providers: [
+        AuthService,
+        {
+            provide: APP_GUARD,
+            useClass: AuthGuard,
+        },
+        ControlAccessGuard,
+    ],
+    exports: [AuthService, ControlAccessGuard],
 })
 export class AuthModule {}

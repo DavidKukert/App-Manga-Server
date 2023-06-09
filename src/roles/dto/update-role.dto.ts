@@ -3,5 +3,5 @@ import { CreateRoleDto } from './create-role.dto';
 import { Prisma } from '@prisma/client';
 
 export class UpdateRoleDto
-  extends PartialType(CreateRoleDto)
-  implements Prisma.RoleUpdateInput {}
+    extends PartialType(CreateRoleDto)
+    implements Prisma.RoleUpdateInput {}
