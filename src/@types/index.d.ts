@@ -1,5 +1,4 @@
 type PermissionsName =
-    | 'update_others_users'
     | 'create_roles'
     | 'findall_roles'
     | 'findone_roles'
@@ -10,4 +9,15 @@ type PermissionsName =
     | 'findone_permissions'
     | 'update_permissions'
     | 'remove_permissions'
-    | 'remove_others_users';
+    | 'update_others_users'
+    | 'remove_others_users'
+    | 'create_series'
+    | 'findall_series'
+    | 'findone_series'
+    | 'update_series'
+    | 'remove_series'
+    | 'create_tags'
+    | 'findall_tags'
+    | 'findone_tags'
+    | 'update_tags'
+    | 'remove_tags';

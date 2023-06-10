@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 async function main() {
-    const entities = ['Roles', 'Permissions'];
+    const entities = ['Roles', 'Permissions', 'Series', 'Tags'];
     const actions = ['Create', 'FindAll', 'FindOne', 'Update', 'Remove'];
     for (const entity of entities) {
         for (const action of actions) {
@@ -37,7 +37,7 @@ async function main() {
                     },
                 },
                 where: {
-                    name: `${entity.toLowerCase()}_${action.toLowerCase()}`,
+                    name: `${action.toLowerCase()}_${entity.toLowerCase()}`,
                 },
             });
         }

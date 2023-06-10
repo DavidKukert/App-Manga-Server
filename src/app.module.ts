@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
+import { SeriesModule } from './series/series.module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import { PermissionsModule } from './permissions/permissions.module';
         AuthModule,
         RolesModule,
         PermissionsModule,
+        SeriesModule,
     ],
     controllers: [],
     providers: [],

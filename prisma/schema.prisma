@@ -2,41 +2,66 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id String @id @default(uuid())
+    id String @id @default(uuid())
 
-  name     String @unique
-  password String
+    name     String @unique
+    password String
 
-  roles Role[] @relation("rolesOnUsers")
+    roles Role[] @relation("rolesOnUsers")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Role {
-  id String @id @default(uuid())
+    id String @id @default(uuid())
 
-  name        String @unique
-  description String
+    name        String @unique
+    description String
 
-  users       User[]       @relation("rolesOnUsers")
-  permissions Permission[] @relation("permissionsOnRoles")
+    users       User[]       @relation("rolesOnUsers")
+    permissions Permission[] @relation("permissionsOnRoles")
 }
 
 model Permission {
-  id String @id @default(uuid())
+    id String @id @default(uuid())
 
-  name        String @unique
-  description String
+    name        String @unique
+    description String
 
-  roles Role[] @relation("permissionsOnRoles")
+    roles Role[] @relation("permissionsOnRoles")
+}
+
+model Serie {
+    id String @id @default(uuid())
+
+    title       String  @unique
+    titleAlter  String?
+    description String
+    cover       String
+    releaseYear String?
+
+    tags Tag[] @relation("tagsOnSeries")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Tag {
+    id String @id @default(uuid())
+
+    name String
+    slug String @unique
+    type String
+
+    series Serie[] @relation("tagsOnSeries")
 }
