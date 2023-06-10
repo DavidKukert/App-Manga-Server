@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { SeriesModule } from './series/series.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { SeriesModule } from './series/series.module';
         RolesModule,
         PermissionsModule,
         SeriesModule,
+        TagsModule,
     ],
     controllers: [],
     providers: [],
