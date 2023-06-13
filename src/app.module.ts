@@ -8,6 +8,7 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { SeriesModule } from './series/series.module';
 import { TagsModule } from './tags/tags.module';
 import { ChaptersModule } from './chapters/chapters.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
     imports: [
@@ -22,6 +23,7 @@ import { ChaptersModule } from './chapters/chapters.module';
         SeriesModule,
         TagsModule,
         ChaptersModule,
+        UploadsModule,
     ],
     controllers: [],
     providers: [],
