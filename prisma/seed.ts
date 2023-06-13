@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 async function main() {
-    const entities = ['Roles', 'Permissions', 'Series', 'Tags'];
+    const entities = ['Roles', 'Permissions', 'Series', 'Tags', 'Chapters'];
     const actions = ['Create', 'FindAll', 'FindOne', 'Update', 'Remove'];
     for (const entity of entities) {
         for (const action of actions) {

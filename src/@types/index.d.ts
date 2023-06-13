@@ -20,4 +20,9 @@ type PermissionsName =
     | 'findall_tags'
     | 'findone_tags'
     | 'update_tags'
-    | 'remove_tags';
+    | 'remove_tags'
+    | 'create_chapters'
+    | 'findall_chapters'
+    | 'findone_chapters'
+    | 'update_chapters'
+    | 'remove_chapters';

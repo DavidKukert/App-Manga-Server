@@ -7,6 +7,7 @@ import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { SeriesModule } from './series/series.module';
 import { TagsModule } from './tags/tags.module';
+import { ChaptersModule } from './chapters/chapters.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { TagsModule } from './tags/tags.module';
         PermissionsModule,
         SeriesModule,
         TagsModule,
+        ChaptersModule,
     ],
     controllers: [],
     providers: [],

@@ -50,7 +50,8 @@ model Serie {
     cover       String
     releaseYear String?
 
-    tags Tag[] @relation("tagsOnSeries")
+    tags     Tag[]     @relation("tagsOnSeries")
+    chapters Chapter[] @relation("chaptersOnSeries")
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -64,4 +65,20 @@ model Tag {
     type String
 
     series Serie[] @relation("tagsOnSeries")
+}
+
+model Chapter {
+    id String @id @default(uuid())
+
+    number  String
+    title   String?
+    content String
+    serieId String
+
+    serie Serie @relation("chaptersOnSeries", fields: [serieId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([number, serieId])
 }
