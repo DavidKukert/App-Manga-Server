@@ -18,6 +18,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ControlAccessGuard } from 'src/auth/control-access.guard';
 import { ReqPermissions } from 'src/auth/decorators/req-permissions.decorator';
+import * as fsExtra from 'fs-extra';
 
 @Controller('series')
 export class SeriesController {
@@ -86,7 +87,11 @@ export class SeriesController {
     @Delete(':id')
     async remove(@Param() { id }: ParamsRouteDto) {
         try {
-            return await this.seriesService.remove(id);
+            const result = await this.seriesService.remove(id);
+            if (result) {
+                await fsExtra.remove(`uploads/series/${result.id}`);
+                return { msg: 'Successfully removed serie' };
+            }
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 if (error.code === 'P2025') {

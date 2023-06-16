@@ -18,6 +18,7 @@ import { ParamsRouteDto } from 'src/dto/params-route.dto';
 import { ControlAccessGuard } from 'src/auth/control-access.guard';
 import { ReqPermissions } from 'src/auth/decorators/req-permissions.decorator';
 import { Public } from 'src/auth/decorators/public.decorator';
+import * as fsExtra from 'fs-extra';
 
 @Controller('chapters')
 export class ChaptersController {
@@ -88,7 +89,13 @@ export class ChaptersController {
     @Delete(':id')
     async remove(@Param() { id }: ParamsRouteDto) {
         try {
-            return await this.chaptersService.remove(id);
+            const result = await this.chaptersService.remove(id);
+            if (result) {
+                await fsExtra.remove(
+                    `uploads/series/${result.serieId}/chapters/${result.id}`,
+                );
+                return { msg: 'Successfully removed chapter' };
+            }
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 if (error.code === 'P2025') {
